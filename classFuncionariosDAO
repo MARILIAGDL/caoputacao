@@ -1,0 +1,214 @@
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace caoputacao
+{
+    class FuncionariosDAO
+    {
+        private string connectionString = @"server=localhost;userid=root;password=;database=caoputacao";
+        private MySqlConnection conexao = null;
+
+        public FuncionariosDAO()
+        {
+
+            try
+            {
+                conexao = new MySqlConnection(connectionString);
+                Console.WriteLine("Conectado");
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+        }
+
+        public void Inserir(Funcionarios funcionario)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("INSERT INTO FUNCIONARIOS(NOME_FUNCIONARIO, TELEFONE_FUNCIONARIO, SALARIO_FUNCIONARIO) VALUES('{0}', '{1}', '{2}')", funcionario.NomeFuncionario, funcionario.TelefoneFuncionario,  funcionario.SalarioFuncionario), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+        public void Alterar(int idFuncionario, string nomeFuncionario, string telefoneFuncionario, double salarioFuncionario)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("UPDATE FUNCIONARIOS SET nome_funcionario = '{0}', telefone_funcionario = '{1}', salario_funcionario = '{2}' WHERE ID_Funcionario = '{3}'", nomeFuncionario, telefoneFuncionario, salarioFuncionario, idFuncionario), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+
+        public void Deletar(int idFuncionario)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("DELETE FROM FUNCIONARIOS WHERE ID_FUNCIONARIO = '{0}'", idFuncionario), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+        public List<Funcionarios> ObterFuncionarios()
+        {
+
+            List<Funcionarios> listaDeFuncionarios = new List<Funcionarios>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand("SELECT * FROM FUNCIONARIOS", conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Funcionarios funcionarios = new Funcionarios();
+                    funcionarios.IdFuncionario = dataReader.GetInt32(0);
+                    funcionarios.NomeFuncionario = dataReader.GetString(1);
+                    funcionarios.TelefoneFuncionario = dataReader.GetString(2);
+                    funcionarios.SalarioFuncionario = dataReader.GetDouble(3);
+                    listaDeFuncionarios.Add(funcionarios);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeFuncionarios;
+
+        }
+
+        public List<Funcionarios> ConsultarFuncionarios(int idFuncionario)
+        {
+
+            List<Funcionarios> listaDeFuncionarios = new List<Funcionarios>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("SELECT * FROM FUNCIONARIOS WHERE ID_FUNCIONARIO = '{0}'", idFuncionario), conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Funcionarios funcionarios = new Funcionarios();
+                    funcionarios.IdFuncionario = dataReader.GetInt32(0);
+                    funcionarios.NomeFuncionario = dataReader.GetString(1);
+                    funcionarios.TelefoneFuncionario = dataReader.GetString(2);
+                    funcionarios.SalarioFuncionario = dataReader.GetDouble(3);
+                    listaDeFuncionarios.Add(funcionarios);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeFuncionarios;
+
+        }
+    }
+}
+
+
