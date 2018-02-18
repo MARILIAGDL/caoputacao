@@ -1,0 +1,214 @@
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace caoputacao
+{
+    class AnimaisDAO
+    {
+        private string connectionString = @"server=localhost;userid=root;password=;database=caoputacao";
+        private MySqlConnection conexao = null;
+
+        public AnimaisDAO()
+        {
+
+            try
+            {
+                conexao = new MySqlConnection(connectionString);
+                Console.WriteLine("Conectado");
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+        }
+
+        public void Inserir(Animais animal)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("INSERT INTO Animais(NOME_ANIMAL, RACA_ANIMAL, PRECO_SERVICO_ANIMAL, CPF_CLIENTE) VALUES('{0}', '{1}', '{2}', '{3}')", animal.NomeAnimal, animal.RacaAnimal, animal.PrecoServicoAnimal, animal.CpfCliente), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+        public void Alterar(string nomeAnimal, string racaAnimal, int precoServicoAnimal, int idAnimal)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("UPDATE Animais SET nome_Animal = '{0}', raca_Animal  = '{1}', preco_servico_animal = '{2}' WHERE id_Animal = '{3}'", nomeAnimal, racaAnimal, precoServicoAnimal, idAnimal), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+
+        public void Deletar(int idAnimal)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("DELETE FROM ANIMAIS WHERE ID_ANIMAL = '{0}'", idAnimal), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+        public List<Animais> ObterAnimal()
+        {
+
+            List<Animais> listaDeAnimal = new List<Animais>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand("SELECT * FROM ANIMAIS", conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Animais animal = new Animais();
+                    animal.IdAnimal = dataReader.GetInt32(0);
+                    animal.NomeAnimal = dataReader.GetString(1);
+                    animal.RacaAnimal = dataReader.GetString(2);
+                    animal.PrecoServicoAnimal = dataReader.GetInt32(3);
+                    animal.CpfCliente = dataReader.GetInt32(4);
+                    listaDeAnimal.Add(animal);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeAnimal;
+
+        }
+
+        public List<Animais> ConsultarAnimal(int IdAnimal)
+        {
+
+            List<Animais> listaDeAnimal = new List<Animais>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("SELECT * FROM ANIMAIS WHERE ID_ANIMAL = '{0}'", IdAnimal), conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Animais animal = new Animais();
+                    animal.IdAnimal = dataReader.GetInt32(0);
+                    animal.NomeAnimal = dataReader.GetString(1);
+                    animal.RacaAnimal = dataReader.GetString(2);
+                    animal.PrecoServicoAnimal = dataReader.GetInt32(3);
+                    animal.CpfCliente = dataReader.GetInt32(4);
+                    listaDeAnimal.Add(animal);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeAnimal;
+
+        }
+    }
+}
