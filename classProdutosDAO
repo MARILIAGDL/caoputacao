@@ -1,0 +1,221 @@
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace caoputacao
+{
+    class ProdutosDAO
+    {
+        private string connectionString = @"server=localhost;userid=root;password=;database=caoputacao";
+        private MySqlConnection conexao = null;
+
+        public ProdutosDAO()
+        {
+
+            try
+            {
+                conexao = new MySqlConnection(connectionString);
+                Console.WriteLine("Conectado");
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+        }
+
+        public void Inserir(Produtos produto)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("INSERT INTO caoputacao.PRODUTOS(NOME_PRODUTO, PRECO_PRODUTO) VALUES('{0}', '{1}')", produto.NomeProduto, produto.PrecoProduto), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+        public void Alterar(string nomeProduto, double precoProduto, int idProduto)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("UPDATE PRODUTOS SET nome_produto = '{0}', preco_produto = '{1}' WHERE ID_PRODUTO = '{2}'", nomeProduto, precoProduto, idProduto), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+
+        public void Deletar(int idProduto)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("DELETE FROM PRODUTOS WHERE ID_PRODUTO = '{0}'", idProduto), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+        public List<Produtos> ObterProdutos()
+        {
+
+            List<Produtos> listaDeProdutos = new List<Produtos>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand("SELECT * FROM PRODUTOS", conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Produtos produtos = new Produtos();
+                    produtos.IdProduto = dataReader.GetInt32(0);
+                    produtos.NomeProduto = dataReader.GetString(1);
+                    produtos.PrecoProduto = dataReader.GetDouble(2);
+                    listaDeProdutos.Add(produtos);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeProdutos;
+
+        }
+
+        public List<Produtos> ConsultarProdutos(int idProduto)
+        {
+
+            List<Produtos> listaDeProdutos = new List<Produtos>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("SELECT * FROM PRODUTOS WHERE ID_PRODUTO = '{0}'", idProduto), conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Produtos produtos = new Produtos();
+                    produtos.IdProduto = dataReader.GetInt32(0);
+                    produtos.NomeProduto = dataReader.GetString(1);
+                    produtos.PrecoProduto = dataReader.GetDouble(2);
+                    listaDeProdutos.Add(produtos);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeProdutos;
+
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
