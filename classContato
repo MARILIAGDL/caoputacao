@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace caoputacao
+{
+    class Contato
+    {
+        private string endereco;
+        private string telefone;
+        private string email;
+
+        public string Endereco { get => endereco; set => endereco = value; }
+        public string Telefone { get => telefone; set => telefone = value; }
+        public string Email { get => email; set => email = value; }
+
+        public Contato()
+        {
+
+        }
+    public Contato(string telefone, string email)
+        {
+            this.telefone = telefone;
+            this.email = email;
+        }
+    }
+}
+
+
+
+
+
+
