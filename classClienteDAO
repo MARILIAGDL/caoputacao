@@ -1,0 +1,216 @@
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+
+namespace caoputacao
+{
+    class ClientesDAO
+    {
+        private string connectionString = @"server=localhost;userid=root;password=;database=caoputacao";
+        private MySqlConnection conexao = null;
+
+        public ClientesDAO()
+        {
+
+            try
+            {
+                conexao = new MySqlConnection(connectionString);
+                Console.WriteLine("Conectado");
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+        }
+
+        public void Inserir(Clientes cliente)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("INSERT INTO CLIENTES(CPF_CLIENTE, NOME_CLIENTE, TELEFONE_CLIENTE, ID_FUNCIONARIO) VALUES('{0}', '{1}', '{2}', '{3}')", cliente.CpfCliente, cliente.NomeCliente, cliente.TelefoneCliente, cliente.IdFuncionario), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+        public void Alterar(string nomeCliente, string telefoneCliente, int cpfCliente, int idFuncionario)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("UPDATE CLIENTES SET nome_Cliente = '{0}', telefone_cliente  = '{1}', id_funcionario = '{2}' WHERE cpf_cliente = '{3}'", nomeCliente, telefoneCliente, idFuncionario, cpfCliente), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+
+        public void Deletar(int cpfCliente)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("DELETE FROM CLIENTES WHERE CPF_CLIENTE = '{0}'", cpfCliente), conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+        public List<Clientes> ObterCliente()
+        {
+
+            List<Clientes> listaDeCliente = new List<Clientes>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand("SELECT * FROM CLIENTES", conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Clientes cliente = new Clientes();
+                    cliente.CpfCliente = dataReader.GetInt32(0);
+                    cliente.NomeCliente = dataReader.GetString(1);
+                    cliente.TelefoneCliente = dataReader.GetString(2);
+                    cliente.IdFuncionario = dataReader.GetInt32(3);
+                    listaDeCliente.Add(cliente);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeCliente;
+
+        }
+
+        public List<Clientes> ConsultarCliente(int cpfCliente)
+        {
+
+            List<Clientes> listaDeCliente = new List<Clientes>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand(String.Format("SELECT * FROM CLIENTES WHERE CPF_CLIENTE = '{0}'", cpfCliente), conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Clientes cliente = new Clientes();
+                    cliente.CpfCliente = dataReader.GetInt32(0);
+                    cliente.NomeCliente = dataReader.GetString(1);
+                    cliente.TelefoneCliente = dataReader.GetString(2);
+                    cliente.IdFuncionario = dataReader.GetInt32(3);
+                    listaDeCliente.Add(cliente);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeCliente;
+
+        }
+    }
+}
+
+
+
+
+
+
