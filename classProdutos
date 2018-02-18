@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace caoputacao
+{
+    class Produtos
+    {
+        private int idProduto;
+        private string nomeProduto;
+        private double precoProduto;
+
+        public int IdProduto { get => idProduto; set => idProduto = value; }
+        public string NomeProduto { get => nomeProduto; set => nomeProduto = value; }
+        public double PrecoProduto { get => precoProduto; set => precoProduto = value; }
+
+        public Produtos()
+        {
+
+        }
+        public Produtos(int idProduto, string nomeProduto, double precoProduto)
+        {
+            this.idProduto = idProduto;
+            this.nomeProduto = nomeProduto;
+            this.precoProduto = precoProduto;
+        }
+    }
+}
