@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace caoputacao
+{
+    class Animais : Clientes
+    {
+        private int idAnimal;
+        private string nomeAnimal;
+        private string racaAnimal;
+        private double precoServicoAnimal;
+
+        public Animais()
+        {
+
+        }
+
+        public int IdAnimal { get => idAnimal; set => idAnimal = value; }
+        public string NomeAnimal { get => nomeAnimal; set => nomeAnimal = value; }
+        public string RacaAnimal { get => racaAnimal; set => racaAnimal = value; }
+        public double PrecoServicoAnimal { get => precoServicoAnimal; set => precoServicoAnimal = value; }
+
+        public Animais(int idAnimal, string nomeAnimal, string racaAnimal, double precoServicoAnimal, int cpfCliente)
+        {
+            this.idAnimal = idAnimal;
+            this.nomeAnimal = nomeAnimal;
+            this.racaAnimal = racaAnimal;
+            this.precoServicoAnimal = precoServicoAnimal;
+            this.CpfCliente = cpfCliente;
+
+        }
+    }
+}
