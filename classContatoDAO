@@ -1,0 +1,183 @@
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace caoputacao
+{
+    class ContatoDAO
+    {
+        private string connectionString = @"server=localhost;userid=root;password=;database=caoputacao";
+        private MySqlConnection conexao = null;
+
+        public ContatoDAO()
+        {
+
+            try
+            {
+                conexao = new MySqlConnection(connectionString);
+                Console.WriteLine("Conectado");
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+        }
+
+        public void Inserir(Contato contato)
+        {
+
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand("INSERT INTO caoputacao.CONTATO(ENDERECO, TELEFONE, EMAIL) VALUES('RUA 123', '08133456789', '100')", conexao);
+
+                comando.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+        }
+
+        public List<Contato> ObterEndereco()
+        {
+
+            List<Contato> listaDeEndereco = new List<Contato>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand("SELECT Endereco FROM CONTATO", conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Contato endereco = new Contato();
+                    endereco.Endereco = dataReader.GetString(0);
+                    listaDeEndereco.Add(endereco);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeEndereco;
+
+        }
+
+        public List<Contato> ObterTelefone()
+        {
+
+            List<Contato> listaDeTelefone = new List<Contato>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand("SELECT Telefone FROM CONTATO", conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Contato telefone = new Contato();
+                    telefone.Telefone = dataReader.GetString(0);
+                    listaDeTelefone.Add(telefone);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeTelefone;
+
+        }
+
+        public List<Contato> ObterEmail()
+        {
+
+            List<Contato> listaDeEmail = new List<Contato>();
+
+            try
+            {
+
+                conexao.Open();
+
+                MySqlCommand comando = new MySqlCommand("SELECT Email FROM CONTATO", conexao);
+                MySqlDataReader dataReader = comando.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Contato email = new Contato();
+                    email.Email = dataReader.GetString(0);
+                    listaDeEmail.Add(email);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + ex.StackTrace + ex.InnerException);
+
+            }
+
+            finally
+            {
+
+                conexao.Close();
+
+            }
+
+            return listaDeEmail;
+
+        }
+    }
+}
