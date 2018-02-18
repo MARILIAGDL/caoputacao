@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace caoputacao
+{
+    class Clientes : Produtos
+    {
+        private int cpfCliente;
+        private string nomeCliente;
+        private string telefoneCliente;
+        private int idFuncionario;
+
+        public Clientes()
+        {
+
+        }
+
+        public int CpfCliente { get => cpfCliente; set => cpfCliente = value; }
+        public string NomeCliente { get => nomeCliente; set => nomeCliente = value; }
+        public string TelefoneCliente { get => telefoneCliente; set => telefoneCliente = value; }
+        public int IdFuncionario { get => idFuncionario; set => idFuncionario = value; }
+
+        public Clientes(int cpfCliente, string nomeCliente, string telefoneCliente, int idFuncionario)
+        {
+            this.cpfCliente = cpfCliente;
+            this.nomeCliente = nomeCliente;
+            this.telefoneCliente = telefoneCliente;
+            this.idFuncionario = idFuncionario;
+        }
+    }
+}
