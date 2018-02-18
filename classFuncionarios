@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace caoputacao
+{
+    class Funcionarios
+    {
+        private int idFuncionario;
+        private string nomeFuncionario;
+        private string telefoneFuncionario;
+        private double salarioFuncionario;
+
+        public int IdFuncionario { get => idFuncionario; set => idFuncionario = value; }
+        public string NomeFuncionario { get => nomeFuncionario; set => nomeFuncionario = value; }
+        public string TelefoneFuncionario { get => telefoneFuncionario; set => telefoneFuncionario = value; }
+        public double SalarioFuncionario { get => salarioFuncionario; set => salarioFuncionario = value; }
+
+        public Funcionarios()
+        {
+
+        }
+        public Funcionarios(int idFuncionario, string nomeFuncionario, string telefoneFuncionario, double salarioFuncionario)
+        {
+            this.idFuncionario = idFuncionario;
+            this.nomeFuncionario = nomeFuncionario;
+            this.telefoneFuncionario = telefoneFuncionario;
+            this.salarioFuncionario = salarioFuncionario;
+        }
+    }
+}
